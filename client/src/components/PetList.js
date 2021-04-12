@@ -36,8 +36,8 @@ export default function PetList() {
     <div>
       <NavBar />
       {!loading ? (
-        <div>
-          <h3 style={{marginTop: 60}}>Account:{address}</h3>
+        <div style={{marginTop: 60}}>
+          
           {isLoading ? (
             <img id="overlay" src="images/progress.gif" alt="progress.gif" />
           ) : (
@@ -60,7 +60,7 @@ export default function PetList() {
                   <div>Breed: {pet.breed}</div>
                   <div>Location: {pet.location}</div>
                   <div>Price: {pet.Price} ETH</div>
-                  {/* <div>Owner: {address}</div> */}
+                  <div>Owner: {address}</div>
 
                   {
                     <button

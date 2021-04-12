@@ -15,17 +15,17 @@ export const initWeb3 = createAsyncThunk("InitWeb3", async (_,thunkAPI) => {
       console.log("++++++++++++++",contract)
       const addresses = await web3.eth.getAccounts();
       let numberOfPets = await contract.methods.totalSupply().call();
+      
       let owner = await contract.methods.owner().call()
       let _pets = []
       for(let i=1;i<=numberOfPets;i++){
         console.log("inside for loop")
         // let tokens = await contract.methods.tokenByIndex(i-1).call();
+        let tokenOwner = await contract.methods.ownerOf(i).call();
         let adoptersArray = await contract.methods.tokenURI(i).call();
         let {data} = await axios.get(adoptersArray)
        
-          console.log(data)
-          _pets.push(data)
-        
+          _pets.push({data,tokenOwner})        
       }
 
       return {
@@ -49,9 +49,10 @@ export const getAdopters = createAsyncThunk(
       let numberOfPets = await contract.methods.balanceOf(address).call();
       let _pets = []
       for(let i=1;i<=numberOfPets;i++){
-        let adoptersArray = await contract.methods.tokenURI(i).call();
+        let tokenIndex = await contract.methods.tokenOfOwnerByIndex(address,i-1).call();
+        let adoptersArray = await contract.methods.tokenURI(tokenIndex).call();
         let {data} = await axios.get(adoptersArray)
-       
+          
           console.log(data)
           _pets.push(data)
         
@@ -79,7 +80,6 @@ export const mintPet = createAsyncThunk(
   async (data, thunkAPI) => {
     
     const { contract, address } = thunkAPI.getState().adoptionReducer;
-console.log(typeof data.petPrice);
     let result = await contract.methods.mintPetNft(data.petURI,data.petPrice).send({ from: address});
     console.log(result)
 

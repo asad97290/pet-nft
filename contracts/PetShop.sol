@@ -67,9 +67,9 @@ contract PetShop is ERC721Enumerable, Ownable {
     }
 
     function buyPetNft(uint256 _tokenId) public payable {
-    
-        uint256 petCost = petsForSale[_tokenId];
         address ownerAddress = ownerOf(_tokenId);
+        require(msg.sender != ownerAddress,"you already bought this pet");
+        uint256 petCost = petsForSale[_tokenId];
         require(msg.value >= petCost, "You need to have enough Ether");
         // _beforeTokenTransfer(ownerAddress,msg.sender,_tokenId);
         _safeTransfer(ownerAddress, msg.sender, _tokenId, "");

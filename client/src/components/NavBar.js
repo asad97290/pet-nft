@@ -8,7 +8,8 @@ export default function NavBar() {
   return (
     <div className="container">
       <nav className="navbar navbar-dark bg-dark fixed-top flex-md-nowrap navbar-expand-lg">
-        <h3 style={{ color: "white" }}> Pet Shop</h3>
+        <Link style={{ color: "white",textDecoration:"none"}} to="/"><h3> Pet Shop</h3></Link>
+        <div style={{color:"gray",marginLeft: "350px"}}>{address}</div>
         <button
           className="navbar-toggler"
           type="button"
@@ -20,11 +21,16 @@ export default function NavBar() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav ml-auto">
+        
+        <div className="collapse navbar-collapse ml-auto" id="navbarNavAltMarkup">
+          <div className="navbar-nav" style={{marginLeft:"auto"}}>
+          <Link className="nav-item nav-link " to="/">
+              Home
+            </Link>
             <Link className="nav-item nav-link " to="/viewNft">
               View My Nft
             </Link>
+           
             {address === owner ? (
               <Link className="nav-item nav-link " to="/addNft">
                 Add Nft
@@ -32,6 +38,7 @@ export default function NavBar() {
             ) : (
               <></>
             )}
+            
           </div>
         </div>
       </nav>

@@ -14,8 +14,16 @@ module.exports = {
       network_id: "*" // Match any network id
     },
     ropsten: {
-      provider: () => new HDWalletProvider(process.env.MNEMONIC, process.env.INFURA_URL),
+      provider: () => new HDWalletProvider(process.env.MNEMONIC, `https://ropsten.infura.io/v3/${process.env.INFURA_URL}`),
       network_id: 3, // eslint-disable-line camelcase
+      gas: 5500000, // Ropsten has a lower block limit than mainnet
+      // confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      // timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      // skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+    },
+    rinkeby: {
+      provider: () => new HDWalletProvider(process.env.MNEMONIC, `https://rinkeby.infura.io/v3/${process.env.INFURA_URL}`),
+      network_id: 4, // eslint-disable-line camelcase
       gas: 5500000, // Ropsten has a lower block limit than mainnet
       // confirmations: 2, // # of confs to wait between deployments. (default: 0)
       // timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)

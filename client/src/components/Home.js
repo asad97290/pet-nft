@@ -20,8 +20,10 @@ function Home() {
     <div className="bg-light">
       <div>
         <NavBar />
+
       </div>
       <div style={{marginTop: 60}}>
+        <h1>Pet Market place</h1>
       {allPets.map((pet, index) => (
                 <div
                   key={index}
@@ -32,19 +34,19 @@ function Home() {
                     padding: "20px",
                   }}
                 >
-                  <h1>{pet.name}</h1>
-                  <img src={pet.picture} width="200px" />
-                  <div>Age: {pet.age} Years</div>
-                  <div>Breed: {pet.breed}</div>
-                  <div>Location: {pet.location}</div>
-                  <div>Price: {pet.Price} ETH</div>
-                  {/* <div>Owner: {address}</div> */}
+                  <h1>{pet.data.name}</h1>
+                  <img src={pet.data.picture} width="200px" />
+                  <div>Age: {pet.data.age} Years</div>
+                  <div>Breed: {pet.data.breed}</div>
+                  <div>Location: {pet.data.location}</div>
+                  <div>Price: {pet.data.Price} ETH</div>
+                  <div>Owner: {pet.tokenOwner}</div>
 
                   {
                     <button
                       style={{ margin: "10px" }}
                       onClick={() => {
-                        dispatch(adoptPet({petId:index+1,petPrice:pet.Price}));
+                        dispatch(adoptPet({petId:index+1,petPrice:pet.data.Price}));
                       }}
                     >
                       Adopt

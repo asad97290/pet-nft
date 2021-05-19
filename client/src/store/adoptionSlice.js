@@ -2,17 +2,20 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Web3 from "web3";
 import Adoption from "../contracts/PetShop.json";
 import axios from "axios";
-export const initWeb3 = createAsyncThunk("InitWeb3", async (_,thunkAPI) => {
+export const initWeb3 = createAsyncThunk("InitWeb3", async () => {
   try {
     if (Web3.givenProvider) {
       const web3 = new Web3(Web3.givenProvider);
       await Web3.givenProvider.enable();
       const networkId = await web3.eth.net.getId();
+      if(networkId !== 4){
+        alert("plz select Rinkeby test network")
+        return;
+      }
       const contract = new web3.eth.Contract(
         Adoption.abi,
         Adoption.networks[networkId].address
       );
-      console.log("++++++++++++++",contract)
       const addresses = await web3.eth.getAccounts();
       let numberOfPets = await contract.methods.totalSupply().call();
       
@@ -37,7 +40,7 @@ export const initWeb3 = createAsyncThunk("InitWeb3", async (_,thunkAPI) => {
       };
     }
   } catch (e) {
-    console.log(e);
+    console.log("Error:",e);
   }
 });
 
@@ -81,7 +84,6 @@ export const mintPet = createAsyncThunk(
     
     const { contract, address } = thunkAPI.getState().adoptionReducer;
     let result = await contract.methods.mintPetNft(data.petURI,data.petPrice).send({ from: address});
-    console.log(result)
 
     return { from: result.from };
   }
@@ -115,14 +117,39 @@ const adoptionSlice = createSlice({
   },
   extraReducers: {
     [mintPet.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.error = false;
+      state.errorMessage = "";
+    },
+    [mintPet.pending]: (state, action) => {
+      state.isLoading = true;
+    },
 
+    [mintPet.rejected]: (state, action) => {
+      state.errorMessage = action.error.message;
+      state.error = true;
+      state.isLoading = false;
     },
     [initWeb3.fulfilled]: (state, action) => {
+      
       state.web3 = action.payload.web3;
       state.contract = action.payload.contract;
       state.address = action.payload.address;
       state.allPets = action.payload._pets;
       state.owner = action.payload.owner;
+      state.isLoading = false;
+      state.error = false;
+      state.errorMessage = "";
+    },
+    [initWeb3.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+
+    [initWeb3.rejected]: (state, action) => {
+
+      state.errorMessage = action.error.message;
+      state.error = true;
+      state.isLoading = false;
     },
     [getAdopters.fulfilled]: (state, action) => {
       state.pets = action.payload;

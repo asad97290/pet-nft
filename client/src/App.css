@@ -1,8 +1,7 @@
 .App {
   text-align: center;
-  /* background-color: #282c34; */
-}
 
+}
 
 .App-header {
   /* background-color: #282c34; */
@@ -14,7 +13,9 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.navbar{
+  padding-left:20px;
+}
 .App-link {
   color: #61dafb;
 }

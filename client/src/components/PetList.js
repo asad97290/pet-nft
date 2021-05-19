@@ -55,23 +55,14 @@ export default function PetList() {
                   }}
                 >
                   <h1>{pet.name}</h1>
-                  <img src={pet.picture} width="200px" />
-                  <div>Age: {pet.age} Years</div>
-                  <div>Breed: {pet.breed}</div>
-                  <div>Location: {pet.location}</div>
+                  <img src={pet.image} width="200px" />
+                  <div>Age: {pet.attributes[0].value} Years</div>
+                  <div>Breed: {pet.attributes[1].value}</div>
+                  <div>Location: {pet.attributes[0].value}</div>
                   <div>Price: {pet.Price} ETH</div>
                   <div>Owner: {address}</div>
 
-                  {
-                    <button
-                      style={{ margin: "10px" }}
-                      onClick={() => {
-                        dispatch(adoptPet({petId:index+1,petPrice:pet.Price}));
-                      }}
-                    >
-                      Adopt
-                    </button>
-                  }
+              
                 </div>
               ))}
             </div>

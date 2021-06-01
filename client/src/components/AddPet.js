@@ -65,6 +65,7 @@ export default function AddPet() {
     });
 
     ipfs.files.add(Buffer(data)).then((cid) => {
+      console.log(cid)
       let petURI = `https://gateway.pinata.cloud/ipfs/${cid[0].hash}`;
       dispatch(mintPet({ petURI, petPrice: p }));
     });

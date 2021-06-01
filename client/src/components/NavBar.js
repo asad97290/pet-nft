@@ -28,12 +28,12 @@ export default function NavBar() {
               Home
             </Link>
             <Link className="nav-item nav-link " to="/viewNft">
-              View My Nft
+              Profile
             </Link>
            
             {address === owner ? (
               <Link className="nav-item nav-link " to="/addNft">
-                Add Nft
+                Create
               </Link>
             ) : (
               <></>

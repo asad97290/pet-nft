@@ -81,7 +81,6 @@ export const adoptPet = createAsyncThunk(
 export const mintPet = createAsyncThunk(
   "MintPet",
   async (data, thunkAPI) => {
-    
     const { contract, address } = thunkAPI.getState().adoptionReducer;
     let result = await contract.methods.mintPetNft(data.petURI,data.petPrice).send({ from: address});
 

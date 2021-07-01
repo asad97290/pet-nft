@@ -5,14 +5,16 @@ import { adoptPet, initWeb3, setAccount } from "../store/adoptionSlice";
 
 function Home() {
   const dispatch = useDispatch();
+  
   window.ethereum.on("accountsChanged", function (accounts) {
     dispatch(setAccount(accounts[0]));
     window.location.reload();
   });
-  const { allPets, isLoading } = useSelector((state) => {
+  const { allPets, isLoading} = useSelector((state) => {
     return state.adoptionReducer;
   });
   useEffect(() => {
+    console.log(window.ethereum)
     dispatch(initWeb3());
   }, []);
   return (

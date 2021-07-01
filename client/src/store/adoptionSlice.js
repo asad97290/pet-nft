@@ -8,6 +8,7 @@ export const initWeb3 = createAsyncThunk("InitWeb3", async () => {
       const web3 = new Web3(Web3.givenProvider);
       await Web3.givenProvider.enable();
       const networkId = await web3.eth.net.getId();
+      
       if(networkId !== 4){
         alert("plz select Rinkeby test network")
         return;

@@ -91,16 +91,15 @@ contract PetShop is ERC721Enumerable, Ownable {
 
     function mintPetNft(string memory _tokenURI, uint256 _price)
         external
-        onlyOwner
         returns (uint256)
     {
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
-        _safeMint(owner(), newItemId);
+        _safeMint(msg.sender, newItemId);
         petsPrice[newItemId] = _price;
         petsOnSale[newItemId] = false;
         _setTokenURI(newItemId, _tokenURI);
-        emit PetCreated(owner(), newItemId, _price, _tokenURI);
+        emit PetCreated(msg.sender, newItemId, _price, _tokenURI);
         return newItemId;
     }
 

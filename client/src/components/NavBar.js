@@ -31,13 +31,11 @@ export default function NavBar() {
               Profile
             </Link>
            
-            {address === owner ? (
+            
               <Link className="nav-item nav-link " to="/addNft">
                 Create
               </Link>
-            ) : (
-              <></>
-            )}
+            
             
           </div>
         </div>

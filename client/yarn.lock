@@ -2926,10 +2926,10 @@
     "@octokit/types" "^6.0.3"
     "universal-user-agent" "^6.0.0"
 
-"@octokit/openapi-types@^7.3.5":
-  "integrity" "sha512-6bm5lzGDOeSnWHM5W8OZ86RD2KpchynU+/Qlm5hNEFjfLDhwfAY2lSe68YRUEYFGlxSHe0HmakyhvmtWoD3Zog=="
-  "resolved" "https://registry.npmjs.org/@octokit/openapi-types/-/openapi-types-7.3.5.tgz"
-  "version" "7.3.5"
+"@octokit/openapi-types@^8.2.1":
+  "integrity" "sha512-BJz6kWuL3n+y+qM8Pv+UGbSxH6wxKf/SBs5yzGufMHwDefsa+Iq7ZGy1BINMD2z9SkXlIzk1qiu988rMuGXEMg=="
+  "resolved" "https://registry.npmjs.org/@octokit/openapi-types/-/openapi-types-8.2.1.tgz"
+  "version" "8.2.1"
 
 "@octokit/plugin-paginate-rest@^2.6.2":
   "integrity" "sha512-3WSAKBLa1RaR/7GG+LQR/tAZ9fp9H9waE9aPXallidyci9oZsfgsLn5M836d3LuDC6Fcym+2idRTBpssHZePVg=="
@@ -2943,12 +2943,12 @@
   "resolved" "https://registry.npmjs.org/@octokit/plugin-request-log/-/plugin-request-log-1.0.4.tgz"
   "version" "1.0.4"
 
-"@octokit/plugin-rest-endpoint-methods@5.3.4":
-  "integrity" "sha512-2Y2q/FYCsW5tcwIqgnLOgzZXEb3I1VoSQGyHs/Zki/Ufs5H+uT0maPVHatLKw90LQbqK7ON8NpL3Y8IyzG6pNA=="
-  "resolved" "https://registry.npmjs.org/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-5.3.4.tgz"
-  "version" "5.3.4"
+"@octokit/plugin-rest-endpoint-methods@5.4.1":
+  "integrity" "sha512-Nx0g7I5ayAYghsLJP4Q1Ch2W9jYYM0FlWWWZocUro8rNxVwuZXGfFd7Rcqi9XDWepSXjg1WByiNJnZza2hIOvQ=="
+  "resolved" "https://registry.npmjs.org/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-5.4.1.tgz"
+  "version" "5.4.1"
   dependencies:
-    "@octokit/types" "^6.16.7"
+    "@octokit/types" "^6.18.1"
     "deprecation" "^2.3.1"
 
 "@octokit/request-error@^2.0.5", "@octokit/request-error@^2.1.0":
@@ -2973,21 +2973,21 @@
     "universal-user-agent" "^6.0.0"
 
 "@octokit/rest@^18.0.0":
-  "integrity" "sha512-BeV2P48RR3MVPhSBq6KXXHMVHEJg5vnFBkFN1GKPXBohXTp+eb0gJq+5iYgkjbOMG6biNvkKllPDWJchpQHHiA=="
-  "resolved" "https://registry.npmjs.org/@octokit/rest/-/rest-18.6.3.tgz"
-  "version" "18.6.3"
+  "integrity" "sha512-Kn6WrI2ZvmAztdx+HEaf88RuJn+LK72S8g6OpciE4kbZddAN84fu4fiPGxcEu052WmqKVnA/cnQsbNlrYC6rqQ=="
+  "resolved" "https://registry.npmjs.org/@octokit/rest/-/rest-18.6.7.tgz"
+  "version" "18.6.7"
   dependencies:
     "@octokit/core" "^3.5.0"
     "@octokit/plugin-paginate-rest" "^2.6.2"
     "@octokit/plugin-request-log" "^1.0.2"
-    "@octokit/plugin-rest-endpoint-methods" "5.3.4"
+    "@octokit/plugin-rest-endpoint-methods" "5.4.1"
 
-"@octokit/types@^6.0.3", "@octokit/types@^6.13.0", "@octokit/types@^6.16.1", "@octokit/types@^6.16.7":
-  "integrity" "sha512-OuQELiwIKeDySgNID52vm33wDRc2aaX8lKYgAw9Hmw939ITow1HspT8/AH3M3jgGFUMDmHlMNBNEmH7xV7ggXQ=="
-  "resolved" "https://registry.npmjs.org/@octokit/types/-/types-6.16.7.tgz"
-  "version" "6.16.7"
+"@octokit/types@^6.0.3", "@octokit/types@^6.13.0", "@octokit/types@^6.16.1", "@octokit/types@^6.18.1":
+  "integrity" "sha512-5YsddjO1U+xC8ZYKV8yZYebW55PCc7qiEEeZ+wZRr6qyclynzfyD65KZ5FdtIeP0/cANyFaD7hV69qElf1nMsQ=="
+  "resolved" "https://registry.npmjs.org/@octokit/types/-/types-6.18.1.tgz"
+  "version" "6.18.1"
   dependencies:
-    "@octokit/openapi-types" "^7.3.5"
+    "@octokit/openapi-types" "^8.2.1"
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   "integrity" "sha512-br5Qwvh8D2OQqSXpd1g/xqXKnK0r+Jz6qVKBbWmpUcrbGOxUrf39V5oZ1876084CGn18uMdR5uvPqBv9UqtBjQ=="
@@ -7020,7 +7020,14 @@
   dependencies:
     "ms" "^2.1.1"
 
-"debug@^4.0.0", "debug@^4.0.1", "debug@^4.1.0", "debug@^4.1.1", "debug@^4.3.1", "debug@4":
+"debug@^4.0.0", "debug@^4.3.1", "debug@4":
+  "integrity" "sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw=="
+  "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.2.tgz"
+  "version" "4.3.2"
+  dependencies:
+    "ms" "2.1.2"
+
+"debug@^4.0.1", "debug@^4.1.0", "debug@^4.1.1":
   "integrity" "sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.1.tgz"
   "version" "4.3.1"
@@ -13367,10 +13374,10 @@
   "resolved" "https://registry.npmjs.org/nested-error-stacks/-/nested-error-stacks-2.1.0.tgz"
   "version" "2.1.0"
 
-"netlify-cli@^4.0.5":
-  "integrity" "sha512-p1wJwMMWHM/Av5/Bsabtr0UTX4lTJVZg7Hz+G9kbA/n2wdKoWAj5P5B+shDRGRBhaFDbCiHf36baKtLJWP4SiQ=="
-  "resolved" "https://registry.npmjs.org/netlify-cli/-/netlify-cli-4.0.5.tgz"
-  "version" "4.0.5"
+"netlify-cli@^4.0.6":
+  "integrity" "sha512-8w8ZsZomSgUO0K2Q331OZWD+hrKdbUj5Q4IZCsbwxLV0Olq1E+V+6vtxFHx7jVfLzmQPq7QY8rVaBnlOGHBOvw=="
+  "resolved" "https://registry.npmjs.org/netlify-cli/-/netlify-cli-4.0.6.tgz"
+  "version" "4.0.6"
   dependencies:
     "@netlify/build" "^12.25.0"
     "@netlify/config" "^9.5.0"
@@ -19515,6 +19522,7 @@
     "web3-utils" "1.3.4"
 
 "webcrypto-shim@github:dignifiedquire/webcrypto-shim#master":
+  "integrity" "sha512-WPY6kEv14dt7B8OGgk2fZxsq39DUcbCRQqjRmu6aZAFORss40GPXESKCRpbDLaHqKETE16DtuUeRE/XcVaF3vg=="
   "resolved" "git+ssh://git@github.com/dignifiedquire/webcrypto-shim.git#190bc9ec341375df6025b17ae12ddb2428ea49c8"
   "version" "0.1.1"
 

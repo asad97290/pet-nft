@@ -14,9 +14,8 @@ function Home() {
     return state.adoptionReducer;
   });
   useEffect(() => {
-    console.log(window.ethereum)
     dispatch(initWeb3());
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div className="bg-light">
       <NavBar />
@@ -36,16 +35,18 @@ function Home() {
               }}
             >
               <h1>{pet.data.name}</h1>
-              <img src={pet.data.image} width="200px" />
+              <img src={pet.data.image} width="200px" alt="pet"/>
               <div>Age: {pet.data.attributes[0].value} Years</div>
               <div>Breed: {pet.data.attributes[1].value}</div>
               <div>Location: {pet.data.attributes[2].value}</div>
               <div>Price: {pet.data.Price} ETH</div>
-              <div>Owner: {pet.tokenOwner}</div>
+              <a href={pet.uri} target="_blank" rel="noreferrer">view json metadata</a>
+              <div>Owner: {pet.tokenOwner.slice(0,6)}...{pet.tokenOwner.slice(pet.tokenOwner.length -4)}</div>
 
               {
                 <button
-                  style={{ margin: "10px" }}
+                className="btn btn-success"  
+                style={{ margin: "10px" }}
                   onClick={() => {
                     dispatch(
                       adoptPet({ petId: index + 1, petPrice: pet.data.Price })

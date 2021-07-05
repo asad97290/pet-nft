@@ -78,7 +78,9 @@ export default function AddPet() {
       {isLoading ? (
         <img id="overlay" src="images/progress.gif" alt="progress.gif" />
       ) : (
+        
         <div style={{ marginTop: 60 }}>
+                  <h1>Add a Pet</h1>
           <div>
             Name: <input id="name" />
           </div>

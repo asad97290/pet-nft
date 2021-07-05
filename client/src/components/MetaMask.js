@@ -1,24 +1,22 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { initWeb3 } from "../store/adoptionSlice";
-import NavBar from "./NavBar";
+import { Link } from "react-router-dom";
+
 function MetaMask() {
-  const dispatch = useDispatch();
   return (
-    <div style={{ left: "50%", right: "50%" }}>
-      <button
-        style={{ padding: "10px", marginTop: "50px" }}
-        onClick={() => {
-          dispatch(initWeb3());
-        }}
+    <div>
+    <div style={{position:"absolute",top:"50%",left:"50%" ,transform:"translate(-50%,-50%)"}}>
+      <Link
+        className="btn btn-success"
+        to="/home"
       >
         <img
           src="https://docs.metamask.io/metamask-fox.svg"
           alt="metamask logo"
           style={{ width: 35, height: 35 }}
         />
-        <span>Metamask</span>
-      </button>
+        <span> Metamask</span>
+      </Link>
+    </div>
     </div>
   );
 }

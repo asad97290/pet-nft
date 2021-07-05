@@ -29,7 +29,7 @@ export const initWeb3 = createAsyncThunk("InitWeb3", async () => {
         let adoptersArray = await contract.methods.tokenURI(i).call();
         let {data} = await axios.get(adoptersArray)
        
-          _pets.push({data,tokenOwner})        
+          _pets.push({data,tokenOwner,uri:adoptersArray})        
       }
 
       return {
@@ -73,7 +73,6 @@ export const adoptPet = createAsyncThunk(
   async (data, thunkAPI) => {
     
     const { contract, web3,address } = thunkAPI.getState().adoptionReducer;
-    // console.log(address,"..................",await web3.utils.toHex(web3.utils.toWei("0.1", "ether")))
     let result = await contract.methods.buyPetNft(data.petId).send({ from:address, value: web3.utils.toWei(data.petPrice,"ether")});
 
     return { from: result.from };
@@ -88,15 +87,7 @@ export const mintPet = createAsyncThunk(
     return { from: result.from };
   }
 );
-// export const unAdoptPet = createAsyncThunk(
-//   "UnAdoptPet",
-//   async (petId, thunkAPI) => {
-//     const { contract, address } = thunkAPI.getState().adoptionReducer;
-//     let result = await contract.methods.unAdopt(petId).send({ from: address });
 
-//     return { from: result.from, petId };
-//   }
-// );
 const adoptionSlice = createSlice({
   name: "AdoptionSlice",
   initialState: {
@@ -146,16 +137,26 @@ const adoptionSlice = createSlice({
     },
 
     [initWeb3.rejected]: (state, action) => {
-
       state.errorMessage = action.error.message;
       state.error = true;
       state.isLoading = false;
     },
     [getAdopters.fulfilled]: (state, action) => {
       state.pets = action.payload;
+      state.isLoading = false;
+      state.error = false;
+      state.errorMessage = "";
+    },
+    [getAdopters.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+
+    [getAdopters.rejected]: (state, action) => {
+      state.errorMessage = action.error.message;
+      state.error = true;
+      state.isLoading = false;
     },
     [adoptPet.fulfilled]: (state, action) => {
-      // state.adopters[action.payload.petId] = action.payload.from;
       state.isLoading = false;
       state.error = false;
       state.errorMessage = "";
@@ -170,22 +171,7 @@ const adoptionSlice = createSlice({
       state.error = true;
       state.isLoading = false;
     },
-   
-    // [unAdoptPet.rejected]: (state, action) => {
-    //   state.errorMessage = action.error.message;
-    //   state.error = true;
-    //   state.isLoading = false;
-    // },
-    // [unAdoptPet.pending]: (state, action) => {
-    //   state.isLoading = true;
-    // },
-    // [unAdoptPet.fulfilled]: (state, action) => {
-    //   state.adopters[action.payload.petId] =
-    //     "0x0000000000000000000000000000000000000000";
-    //   state.isLoading = false;
-    //   state.error = false;
-    //   state.errorMessage = "";
-    // },
+ 
   },
 });
 

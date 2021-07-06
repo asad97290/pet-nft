@@ -11,7 +11,7 @@ export const initWeb3 = createAsyncThunk("InitWeb3", async () => {
       
       if(networkId !== 4){
         alert("plz select Rinkeby test network")
-        return;
+        return
       }
       const contract = new web3.eth.Contract(
         Adoption.abi,
@@ -23,8 +23,7 @@ export const initWeb3 = createAsyncThunk("InitWeb3", async () => {
       let owner = await contract.methods.owner().call()
       let _pets = []
       for(let i=1;i<=numberOfPets;i++){
-        console.log("inside for loop")
-        // let tokens = await contract.methods.tokenByIndex(i-1).call();
+
         let tokenOwner = await contract.methods.ownerOf(i).call();
         let adoptersArray = await contract.methods.tokenURI(i).call();
         let {data} = await axios.get(adoptersArray)

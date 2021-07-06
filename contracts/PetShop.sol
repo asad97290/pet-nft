@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: NO-LICENSE
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
@@ -11,13 +11,10 @@ contract PetShop is ERC721Enumerable, Ownable {
 
     using Strings for uint256;
 
-    // mapping the TokenId and price
+    // mapping the TokenId to price
     mapping(uint256 => uint256) public petsPrice;
 
-    // Boolean values either pets are on sale or not
-    mapping(uint256 => bool) public petsOnSale;
-
-    // Optional mapping for token URIs
+    //  mapping for token URIs
     mapping(uint256 => string) private _tokenURIs;
 
     event PetCreated(
@@ -71,13 +68,7 @@ contract PetShop is ERC721Enumerable, Ownable {
         return super.tokenURI(tokenId);
     }
 
-    /**
-     * @dev Sets `_tokenURI` as the tokenURI of `tokenId`.
-     *
-     * Requirements:
-     *
-     * - `tokenId` must exist.
-     */
+  
     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
         internal
         virtual
@@ -97,24 +88,24 @@ contract PetShop is ERC721Enumerable, Ownable {
         uint256 newItemId = _tokenIds.current();
         _safeMint(msg.sender, newItemId);
         petsPrice[newItemId] = _price;
-        petsOnSale[newItemId] = false;
+        // petsOnSale[newItemId] = false;
         _setTokenURI(newItemId, _tokenURI);
         emit PetCreated(msg.sender, newItemId, _price, _tokenURI);
         return newItemId;
     }
 
-    function putPetOnSale(uint256 _tokenId)
-        external
-        onlyTokenOwner(_tokenId)
-        returns (bool)
-    {
-        require(
-            _tokenId > 0 && _exists(_tokenId),
-            "PetShop: tokenId not valid"
-        );
-        petsOnSale[_tokenId] = true;
-        return true;
-    }
+    // function putPetOnSale(uint256 _tokenId)
+    //     external
+    //     onlyTokenOwner(_tokenId)
+    //     returns (bool)
+    // {
+    //     require(
+    //         _tokenId > 0 && _exists(_tokenId),
+    //         "PetShop: tokenId not valid"
+    //     );
+    //     petsOnSale[_tokenId] = true;
+    //     return true;
+    // }
 
     function buyPetNft(uint256 _tokenId) public payable returns (bool) {
         require(

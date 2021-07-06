@@ -29,7 +29,7 @@ export default function NavBar() {
           id="navbarNavAltMarkup"
         >
           <div className="navbar-nav" style={{ marginLeft: "auto" }}>
-            <Link className="nav-item nav-link " to="/home">
+            <Link className="nav-item nav-link " to="/">
               Home
             </Link>
             <Link className="nav-item nav-link " to="/viewNft">

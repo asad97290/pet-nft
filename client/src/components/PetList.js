@@ -11,9 +11,9 @@ export default function PetList() {
   });
 
   useEffect(() => {
-    console.log(isLoading);
+
     dispatch(getAdopters());
-    console.log(isLoading);
+   
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

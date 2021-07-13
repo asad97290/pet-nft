@@ -10,25 +10,21 @@ contract PetShop is ERC721Enumerable, Ownable {
     Counters.Counter private _tokenIds;
 
     using Strings for uint256;
-
+    
+    mapping(uint256=>bool) private _isPetOnSale;
+    
     // mapping the TokenId to price
-    mapping(uint256 => uint256) public petsPrice;
+    mapping(uint256 => uint256) private petsPrice;
 
     //  mapping for token URIs
     mapping(uint256 => string) private _tokenURIs;
 
-    event PetCreated(
-        address indexed owner,
-        uint256 tokenId,
+    event PetTransfer(
+        uint256 indexed tokenId,
+        address oldOwner,
+        address newOwner,
         uint256 price,
-        string tokenURI
-    );
-
-    event PetPurchase(
-        address indexed prevOwner,
-        address indexed newOwner,
-        uint256 tokenId,
-        uint256 price
+        uint256 date
     );
 
     modifier onlyTokenOwner(uint256 tokenId) {
@@ -68,7 +64,10 @@ contract PetShop is ERC721Enumerable, Ownable {
         return super.tokenURI(tokenId);
     }
 
-  
+    function isPetOnSale(uint256 _tokenId) view public returns(bool){
+        return _isPetOnSale[_tokenId];
+    }
+
     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
         internal
         virtual
@@ -80,38 +79,39 @@ contract PetShop is ERC721Enumerable, Ownable {
         _tokenURIs[tokenId] = _tokenURI;
     }
 
-    function mintPetNft(string memory _tokenURI, uint256 _price)
+    function mintPetNft(string memory _tokenURI)
         external
         returns (uint256)
     {
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         _safeMint(msg.sender, newItemId);
-        petsPrice[newItemId] = _price;
-        // petsOnSale[newItemId] = false;
+        _isPetOnSale[newItemId] = false;
         _setTokenURI(newItemId, _tokenURI);
-        emit PetCreated(msg.sender, newItemId, _price, _tokenURI);
+        emit PetTransfer(newItemId,address(0),msg.sender, 0,block.timestamp);
         return newItemId;
     }
 
-    // function putPetOnSale(uint256 _tokenId)
-    //     external
-    //     onlyTokenOwner(_tokenId)
-    //     returns (bool)
-    // {
-    //     require(
-    //         _tokenId > 0 && _exists(_tokenId),
-    //         "PetShop: tokenId not valid"
-    //     );
-    //     petsOnSale[_tokenId] = true;
-    //     return true;
-    // }
+    function putPetOnSale(uint256 _tokenId,uint256 _price)
+        external
+        onlyTokenOwner(_tokenId)
+        returns (bool)
+    {
+        require(
+            _tokenId > 0 && _exists(_tokenId),
+            "PetShop: tokenId not valid"
+        );
+        petsPrice[_tokenId] = _price;
+        _isPetOnSale[_tokenId] = true;
+        return true;
+    }
 
     function buyPetNft(uint256 _tokenId) public payable returns (bool) {
         require(
             _tokenId > 0 && _exists(_tokenId),
             "PetShop: tokenId not valid"
         );
+        require(_isPetOnSale[_tokenId],"pet not for sale");
         address ownerAddress = ownerOf(_tokenId);
         require(
             msg.sender != ownerAddress && msg.sender != owner(),
@@ -124,7 +124,8 @@ contract PetShop is ERC721Enumerable, Ownable {
         if (msg.value > petCost) {
             payable(msg.sender).transfer(msg.value - petCost);
         }
-        emit PetPurchase(ownerAddress, msg.sender, _tokenId, msg.value);
+        emit PetTransfer( _tokenId,msg.sender,ownerAddress, msg.value,block.timestamp);
+        _isPetOnSale[_tokenId] = false;
         return true;
     }
 }

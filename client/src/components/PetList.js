@@ -42,6 +42,7 @@ export default function PetList() {
                 Owner: {address.slice(0, 6)}...
                 {address.slice(address.length - 4)}
               </div>
+              
             </div>
           ))}
         </div>

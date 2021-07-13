@@ -20,22 +20,30 @@ export const initWeb3 = createAsyncThunk("InitWeb3", async () => {
       const addresses = await web3.eth.getAccounts();
       let numberOfPets = await contract.methods.totalSupply().call();
       
-      let owner = await contract.methods.owner().call()
       let _pets = []
+      let _salePets = []
       for(let i=1;i<=numberOfPets;i++){
-
         let tokenOwner = await contract.methods.ownerOf(i).call();
-        let adoptersArray = await contract.methods.tokenURI(i).call();
-        let {data} = await axios.get(adoptersArray)
-       
-          _pets.push({data,tokenOwner,uri:adoptersArray})        
+        let uri = await contract.methods.tokenURI(i).call();
+        let {data} = await axios.get(uri)
+        let _isPetOnSale = await contract.methods.isPetOnSale(i).call();
+        if(!_isPetOnSale){
+          _pets.push({data,tokenOwner,uri})
+        }
+        else{
+          _salePets.push({data,tokenOwner,uri})
+        }
+                  
       }
+
+      let owner = await contract.methods.owner().call()
 
       return {
         web3,
         contract,
         address: addresses[0],
         _pets,
+        _salePets,
         owner
       };
     }
@@ -67,6 +75,32 @@ export const getAdopters = createAsyncThunk(
   }
 );
 
+
+export const getTransferHistory = createAsyncThunk(
+  "GetTransferHistory",
+  async (data, thunkAPI) => {
+    
+    const { contract } = thunkAPI.getState().adoptionReducer; 
+
+    const transferTx = await contract.getPastEvents("PetTransfer", {
+      fromBlock: 0,
+      toBlock: "latest",
+      filter: { tokenId: data},
+    });
+
+    return { transferTx};
+  }
+);
+export const putPetOnSale = createAsyncThunk(
+  "PutPetOnSale",
+  async (data, thunkAPI) => {
+    
+    const { contract, address } = thunkAPI.getState().adoptionReducer;
+    let result = await contract.methods.putPetOnSale(data.petId,data.tokenUri).send({ from:address });
+
+    return { from: result.from };
+  }
+);
 export const adoptPet = createAsyncThunk(
   "AdoptPet",
   async (data, thunkAPI) => {
@@ -99,6 +133,7 @@ const adoptionSlice = createSlice({
     isLoading: false,
     errorMessage: "",
     error: false,
+    transferHistory:[]
   },
   reducers: {
     setAccount:(state, action)=>{
@@ -139,6 +174,10 @@ const adoptionSlice = createSlice({
       state.errorMessage = action.error.message;
       state.error = true;
       state.isLoading = false;
+    },
+
+    [getTransferHistory.fulfilled]:(state, action)=>{
+      state.transferHistory = action.payload.transferTx;
     },
     [getAdopters.fulfilled]: (state, action) => {
       state.pets = action.payload;

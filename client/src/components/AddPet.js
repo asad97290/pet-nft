@@ -41,7 +41,8 @@ export default function AddPet() {
     const p = web3.utils.toWei(document.getElementById("price").value);
     //to publish token metadata to IPFS
 
-    const data = JSON.stringify({
+    const data = JSON.stringify(
+      {
       name: document.getElementById("name").value,
       image: `https://gateway.pinata.cloud/ipfs/${hash}`,
       description:
@@ -62,7 +63,8 @@ export default function AddPet() {
       ],
 
       Price: document.getElementById("price").value, 
-    });
+    }
+    );
 
     ipfs.files.add(Buffer(data)).then((cid) => {
       console.log(cid)
